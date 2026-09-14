@@ -14,17 +14,10 @@ jobs:
               uses: actions/checkout@v7
 
             - name: OpenOrbis
-              uses: dawidd6/action-download-artifact@v24
-              with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-                  owner: OpenOrbis
-                  repo: OpenOrbis-PS4-Toolchain
-                  tag: "v0.5.4"
-                  file: "toolchain-llvm-18.tar.gz"
-                  dir: "${{ github.workspace }}/toolchain"
-
-            - name: toolchain env
               run: |
+                  mkdir -p ${{ github.workspace }}/toolchain
+                  cd ${{ github.workspace }}/toolchain
+                  curl -L -o toolchain-llvm-18.tar.gz https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/download/v0.5.4/toolchain-llvm-18.tar.gz
                   tar -xzf ${{ github.workspace }}/toolchain/toolchain-llvm-18.tar.gz -C ${{ github.workspace }}/toolchain
                   echo "OO_PS4_TOOLCHAIN=${{ github.workspace }}/toolchain" >> $GITHUB_ENV
                   echo "${{ github.workspace }}/toolchain/bin" >> $GITHUB_PATH
