@@ -1,24 +1,48 @@
----
 name: build
 
 on:
+    push:
+        branches: ["main"]
     workflow_dispatch:
 
 jobs:
     build:
         runs-on: ubuntu-latest
+
         steps:
-            - name: Checkout Repo
+            - name: checkout
               uses: actions/checkout@v7
 
-            - name: Run Open Orbis Toolchain
-              uses: OpenOrbis/toolchain-action@main
+            - name: OpenOrbis
+              uses: dawidd6/action-download-release@v3
               with:
-                  version: latest
-                  command: cd hello_world; make; PkgTool.Core pkg_build pkg/pkg.gp4 .
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  owner: OpenOrbis
+                  repo: OpenOrbis-PS4-Toolchain
+                  tag: "v0.5.4"
+                  file: "toolchain-llvm-18.tar.gz"
+                  dir: "${{ github.workspace }}/toolchain"
 
-            - name: Upload Artifact
-              uses: actions/upload-artifact@v7
+            - name: toolchain env
+              run: |
+                  tar -xzf ${{ github.workspace }}/toolchain/toolchain-llvm-18.tar.gz -C ${{ github.workspace }}/toolchain
+                  echo "OO_PS4_TOOLCHAIN=${{ github.workspace }}/toolchain" >> $GITHUB_ENV
+                  echo "${{ github.workspace }}/toolchain/bin" >> $GITHUB_PATH
+
+            - name: make
+              run: |
+                  cd hello_world
+                  make
+
+            - name: make pkg
+              run: |
+                  make pkg
+
+            - name: publish
+              uses: actions/upload-artifact@v4
               with:
-                  name: IV0000-BREW00083_00-HELLOWORLD000000.pkg
-                  path: hello_world/IV0000-BREW00083_00-HELLOWORLD000000.pkg
+                  name: dists
+                  path: |
+                      */*.pkg
+                      */eboot.bin
+                  if-no-files-found: warn
