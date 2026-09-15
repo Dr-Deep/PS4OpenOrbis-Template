@@ -12,18 +12,20 @@ jobs:
         steps:
             - name: setup env
               run: |
-                  mkdir -p OpenOrbis
+                  cd ${{ github.workspace }}
+                  #mkdir -p OpenOrbis/PS4Toolchain/samples/main
+                  #cd OpenOrbis/PS4Toolchain/samples/main
 
             - name: checkout
               uses: actions/checkout@v7
+              with:
+                  path: "OpenOrbis/PS4Toolchain/samples/main"
 
             - name: OpenOrbis
               run: |
-                  cd ${{ github.workspace }}
-
                   curl -L -o toolchain-llvm-18.tar.gz https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/download/v0.5.4/toolchain-llvm-18.tar.gz
-                  tar -xvf ${{ github.workspace }}/toolchain-llvm-18.tar.gz
-                  ls -alhg OpenOrbis/
+                  tar -xf ${{ github.workspace }}/toolchain-llvm-18.tar.gz
+                  ls -alhg OpenOrbis/PS4Toolchain/samples/main
                   #echo "OO_PS4_TOOLCHAIN=${{ github.workspace }}/toolchain" >> $GITHUB_ENV
                   #echo "${{ github.workspace }}/toolchain/bin" >> $GITHUB_PATH
 
