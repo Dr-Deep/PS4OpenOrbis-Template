@@ -37,6 +37,6 @@ jobs:
               with:
                   name: dists
                   path: |
-                      */*.pkg
-                      */eboot.bin
+                      ./*.pkg
+                      ./eboot.bin
                   if-no-files-found: warn
