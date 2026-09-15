@@ -15,21 +15,22 @@ jobs:
 
             - name: OpenOrbis
               run: |
-                  mkdir -p ${{ github.workspace }}/toolchain
-                  cd ${{ github.workspace }}/toolchain
+                  cd ${{ github.workspace }}
+
                   curl -L -o toolchain-llvm-18.tar.gz https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/download/v0.5.4/toolchain-llvm-18.tar.gz
-                  tar -xzf ${{ github.workspace }}/toolchain/toolchain-llvm-18.tar.gz -C ${{ github.workspace }}/toolchain
-                  echo "OO_PS4_TOOLCHAIN=${{ github.workspace }}/toolchain" >> $GITHUB_ENV
-                  echo "${{ github.workspace }}/toolchain/bin" >> $GITHUB_PATH
+                  tar -xzf ${{ github.workspace }}/toolchain-llvm-18.tar.gz .
+                  ls -alhg
+                  #echo "OO_PS4_TOOLCHAIN=${{ github.workspace }}/toolchain" >> $GITHUB_ENV
+                  #echo "${{ github.workspace }}/toolchain/bin" >> $GITHUB_PATH
 
             - name: make
               run: |
-                  cd hello_world
-                  make
+                  #cd hello_world
+                  #make
 
             - name: make pkg
               run: |
-                  make pkg
+                  #make pkg
 
             - name: publish
               uses: actions/upload-artifact@v4
