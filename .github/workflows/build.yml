@@ -37,6 +37,6 @@ jobs:
               with:
                   name: dists
                   path: |
-                      ./*.pkg
-                      ./eboot.bin
+                      OpenOrbis/PS4Toolchain/samples/main/*.pkg
+                      OpenOrbis/PS4Toolchain/samples/main/eboot.bin
                   if-no-files-found: warn
