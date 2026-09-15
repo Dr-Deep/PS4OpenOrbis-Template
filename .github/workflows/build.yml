@@ -26,9 +26,9 @@ jobs:
               run: |
                   echo "OO_PS4_TOOLCHAIN=${{ github.workspace }}/OpenOrbis/PS4Toolchain" >> $GITHUB_ENV
                   echo "${{ github.workspace }}/OpenOrbis/PS4Toolchain/bin" >> $GITHUB_PATH
+                  # ds
                   cd OpenOrbis/PS4Toolchain/samples/main
-                  env
-                  #make
+                  OO_PS4_TOOLCHAIN="${{ github.workspace }}/OpenOrbis/PS4Toolchain" PATH="${{ github.workspace }}/OpenOrbis/PS4Toolchain/bin:${PATH}" make
 
             - name: make pkg
               run: |
