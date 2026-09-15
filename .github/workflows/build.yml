@@ -29,11 +29,8 @@ jobs:
                   echo "${{ github.workspace }}/OpenOrbis/PS4Toolchain/bin" >> $GITHUB_PATH
                   # ds
                   cd OpenOrbis/PS4Toolchain/samples/main
-                  OO_PS4_TOOLCHAIN="${{ github.workspace }}/OpenOrbis/PS4Toolchain" PATH="${{ github.workspace }}/OpenOrbis/PS4Toolchain/bin:${PATH}" make
-
-            - name: make pkg
-              run: |
-                  #make pkg
+                  OO_PS4_TOOLCHAIN="${{ github.workspace }}/OpenOrbis/PS4Toolchain" PATH="${{ github.workspace }}/OpenOrbis/PS4Toolchain/bin:${PATH}" make all
+                  ls -alhg
 
             - name: publish
               uses: actions/upload-artifact@v4
