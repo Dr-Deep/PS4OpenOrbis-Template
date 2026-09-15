@@ -31,7 +31,8 @@ jobs:
                   OO_PS4_TOOLCHAIN="${{ github.workspace }}/OpenOrbis/PS4Toolchain" PATH="${{ github.workspace }}/OpenOrbis/PS4Toolchain/bin:${PATH}" make all
 
             - name: publish
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v7
               with:
-                  files: OpenOrbis/PS4Toolchain/samples/main/*.pkg
+                  path: OpenOrbis/PS4Toolchain/samples/main/*.pkg
+                  archive: false
                   if-no-files-found: warn
